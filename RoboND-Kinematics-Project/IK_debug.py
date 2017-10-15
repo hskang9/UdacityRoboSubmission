@@ -65,7 +65,7 @@ def test_code(test_case):
 
     ## Insert IK code here!
     ### Your FK code here
-
+    # Reference on the walkthrough of the Kinetics project
     # Define DH param symbols 
     d1, d2, d3, d4, d5, d6, d7 = symbols('d1:8') # link offset
     a0, a1, a2, a3, a4, a5, a6 = symbols('a0:7') # link length
@@ -119,7 +119,7 @@ def test_code(test_case):
 		req.poses[x].orientation.z, req.poses[x].orientation.w])
 
 	    
-            ### Your IK code here 
+    ### Your IK code here 
 
     # Find EE rotation matrix
     r, p, y = symbols('r p y')
@@ -159,7 +159,7 @@ def test_code(test_case):
     R0_3 = T0_1[0:3, 0:3] * T1_2[0:3, 0:3] * T2_3[0:3, 0:3]
     R0_3 = R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3})
     R3_6 = R0_3.inv("LU") * ROT_EE
-    # Euler angles from rotation matrix
+    # Euler angles from rotation matrix with calculating arctangent
     theta4 = atan2(R3_6[2,2], -R3_6[0,2])
     theta5 = atan2(sqrt(R3_6[0,2]*R3_6[0,2] + R3_6[2,2]*R3_6[2,2]),R3_6[1,2])
     theta6 = atan2(-R3_6[1,1], R3_6[1,0])
