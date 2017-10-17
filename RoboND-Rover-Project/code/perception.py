@@ -17,21 +17,12 @@ def color_thresh(img, rgb_thresh=(160, 160, 160)):
     # Return the binary image
     return color_select
 
-def hsv_thresh(img, thresh_lower=(0,0,0), thresh_upper=(255,255,255)):
-    color_select = np.zeros_like(img[:,:,0])
-
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-    #modify the upper and lower bounds of the filter
-    #to alter the filter Tektron3000. BGR
-    lower = np.array([thresh_lower[0], thresh_lower[1], thresh_lower[2]])
-    upper = np.array([thresh_upper[0], thresh_upper[1], thresh_upper[2]])
-
-    mask = cv2.inRange(hsv, lower, upper)
-    res = cv2.bitwise_and(img,img, mask= mask)
-    color_select[mask] = 1
-
-    return color_select
+def hsv_thresh(img, thresh_lower=(20,100,100), thresh_higher=(30, 255, 255)):
+    hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+    # Threshold the HSV image to get only rock colors
+    mask = cv2.inRange(hsv, low, high)
+    # Return the binary image
+    return mask
 
 # Define a function to convert from image coords to rover coords
 def rover_coords(binary_img):
@@ -170,8 +161,8 @@ def perception_step(Rover):
     # Update Rover pixel distances and angles
         # Rover.nav_dists = rover_centric_pixel_distances
         # Rover.nav_angles = rover_centric_angles
-    Rover.nav_dists = rover_centric_pixel_distances
-    Rover.nav_angles = rover_centric_angles
+    Rover.nav_dists = rover_centric_pixel_distances.max()
+    Rover.nav_angles = rover_centric_angles[rover_centric_pixel_distances.index(Rover.nav_dists)]
     
     
     
