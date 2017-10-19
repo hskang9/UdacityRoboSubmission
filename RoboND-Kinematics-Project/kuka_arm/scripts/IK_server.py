@@ -42,7 +42,7 @@ def handle_calculate_IK(req):
 		     alpha1: -pi/2., a1:   0.35, d2:    0, q2: -pi/2. + q2,
 		     alpha2:      0, a2:   1.25, d3:    0, q3:          q3,
 		     alpha3: -pi/2., a3: -0.054, d4:  1.5, q4:          q4,
-		     alpha4: -pi/2., a4:      0, d5:    0, q5:          q5,
+		     alpha4: pi/2., a4:      0, d5:    0, q5:          q5,
 		     alpha5: -pi/2., a5:      0, d6:    0, q6:          q6,
 		     alpha6:      0, a6:      0, d7:0.303, q7:           0}
 
@@ -63,7 +63,7 @@ def handle_calculate_IK(req):
 	T3_4 = TF_Matrix(alpha3, a3, d4, q4).subs(DH_Table)
 	T4_5 = TF_Matrix(alpha4, a4, d5, q5).subs(DH_Table)
 	T5_6 = TF_Matrix(alpha5, a5, d6, q6).subs(DH_Table)
-	T6_EE = TF_Matrix(alpha6, a6, d7, q7).subs(DH_Table)
+	T6_EE = TF_Matrix(alpha6, a6, d7, q7).subs(DH_Table) 
 
 	T0_EE = T0_1 * T1_2 * T2_3 * T3_4 * T4_5 * T5_6 * T6_EE
 	
@@ -73,7 +73,7 @@ def handle_calculate_IK(req):
 	# Extract rotation matrices from the transformation matrices
 	# px,py,pz = end-effector position
 	# roll, pitch, yaw = end-effector orientation
-        px = req.poses[x].position.x
+    px = req.poses[x].position.x
 	py = req.poses[x].position.y
 	pz = req.poses[x].position.z
 
@@ -100,7 +100,7 @@ def handle_calculate_IK(req):
                     req.poses[x].orientation.z, req.poses[x].orientation.w])
      	    
 	    
-            ### Your IK code here 
+        ### Your IK code here 
 
 	    # Find EE rotation matrix
 	    r, p, y = symbols('r p y')
@@ -120,6 +120,7 @@ def handle_calculate_IK(req):
 	    ROT_EE = ROT_z * ROT_y * ROT_x
 
 	    # Compensate for rotation discrepancy between DH parameters and Gazebo
+		# Compare the total homogeneous transform between the base link and the gripper link,
 	    Rot_Error = ROT_z.subs(y, radians(180)) * ROT_y.subs(p, radians(-90))
 
 	    ROT_EE = ROT_EE * Rot_Error
