@@ -69,17 +69,8 @@ def handle_calculate_IK(req):
 	
 
 	
-	FK = T0_EE.evalf(subs={q1: theta1, q2: theta2, q3: theta3, q4: theta4, q5: theta5, q6: theta6})
-	# Extract rotation matrices from the transformation matrices
-	# px,py,pz = end-effector position
-	# roll, pitch, yaw = end-effector orientation
-        px = req.poses[x].position.x
-	py = req.poses[x].position.y
-	pz = req.poses[x].position.z
-
-	(roll, pitch, yaw) = tf.transformations_euler_from_quaternion(
-	    [req.poses[x].orientation.x, req.poses[x].orientation.y,
-		req.poses[x].orientation.z, req.poses[x].orientation.w])
+	
+	
 
 
         # Initialize service response
@@ -158,6 +149,7 @@ def handle_calculate_IK(req):
 	    theta5 = atan2(sqrt(R3_6[0,2]*R3_6[0,2] + R3_6[2,2]*R3_6[2,2]),R3_6[1,2])
 	    theta6 = atan2(-R3_6[1,1], R3_6[1,0])
 	
+	    FK = T0_EE.evalf(subs={q1: theta1, q2: theta2, q3: theta3, q4: theta4, q5: theta5, q6: theta6})
             # Populate response for the IK request
             # In the next line replace theta1,theta2...,theta6 by your joint angle variables
 	    joint_trajectory_point.positions = [theta1, theta2, theta3, theta4, theta5, theta6]
