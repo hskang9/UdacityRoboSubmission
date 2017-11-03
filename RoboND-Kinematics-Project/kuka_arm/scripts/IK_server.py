@@ -125,6 +125,7 @@ def handle_calculate_IK(req):
 	    
 	    # Calculate joint angles using Geometric IK method
 	    theta1 = atan2(WC[1], WC[0])
+	    theta1 = theta1.evalf()
 	    
 
 	    # SSS triangle for theta2 and theta3
@@ -137,7 +138,9 @@ def handle_calculate_IK(req):
 	    angle_c = acos((side_a * side_a + side_b * side_b - side_c * side_c) / (2 * side_a * side_b))
 
 	    theta2 = pi / 2 - angle_a - atan2(WC[2] - 0.75, sqrt(WC[0] * WC[0] + WC[1] * WC[1]) - 0.35)
+	    theta2 = theta2.evalf()
 	    theta3 = pi / 2 - (angle_b + 0.036) # 0.036 accouts for sag in link4 of -0.054m
+	    theta3 = theta3.evalf()	
 
 	    R0_3 = T0_1[0:3, 0:3] * T1_2[0:3, 0:3] * T2_3[0:3, 0:3]
 	    R0_3 = R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3})
@@ -146,10 +149,13 @@ def handle_calculate_IK(req):
 
 	    # Euler angles from rotation matrix
 	    theta4 = atan2(R3_5[2,2], -R3_6[0,2])
+	    theta4 = theta4.evalf()
 	    theta5 = atan2(sqrt(R3_6[0,2]*R3_6[0,2] + R3_6[2,2]*R3_6[2,2]),R3_6[1,2])
+	    theta5 = theta5.evalf()
 	    theta6 = atan2(-R3_6[1,1], R3_6[1,0])
+	    theta6 = theta6.evalf()
 	
-	    FK = T0_EE.evalf(subs={q1: theta1, q2: theta2, q3: theta3, q4: theta4, q5: theta5, q6: theta6})
+	    
             # Populate response for the IK request
             # In the next line replace theta1,theta2...,theta6 by your joint angle variables
 	    joint_trajectory_point.positions = [theta1, theta2, theta3, theta4, theta5, theta6]
