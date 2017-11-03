@@ -73,7 +73,7 @@ def handle_calculate_IK(req):
 	# Extract rotation matrices from the transformation matrices
 	# px,py,pz = end-effector position
 	# roll, pitch, yaw = end-effector orientation
-    px = req.poses[x].position.x
+        px = req.poses[x].position.x
 	py = req.poses[x].position.y
 	pz = req.poses[x].position.z
 
