@@ -1,0 +1,458 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 5.4.2.2 (MacOSX)"/>
+	<meta name="created" content="2017-11-03T16:59:15.227105286"/>
+	<meta name="changed" content="2017-11-04T13:01:42.162220000"/>
+	<style type="text/css">
+		@page { margin: 0.79in }
+		td p { margin-bottom: 0in; line-height: 120% }
+		p { margin-bottom: 0.1in; line-height: 120% }
+		a:link { so-language: zxx }
+	</style>
+</head>
+<body lang="en-US" dir="ltr">
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="5" style="font-size: 20pt"><b>Robotics
+Nanodegree</b></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="4" style="font-size: 15pt">P2:
+Robotic Arm: Pick and Place</font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="2" style="font-size: 11pt">Hyungsuk
+Kang</font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b>Introduction</b></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="2" style="font-size: 11pt">The
+goal for this project was to create forward / inverse kinematic model
+for KUKA KR210 robot arm. The model development, debugging, and
+testing was performed by use of ROS, Gazebo, and Rviz. </font></font>
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b>Kinematic
+Analysis</b></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_58202fb6d948f5dd.jpg" name="Image1" align="left" width="554" height="377" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f">1.
+DH Parameters</span></b></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font size="2" style="font-size: 11pt"><font color="#4f4f4f"><font face="Ubuntu"><span style="letter-spacing: normal"><span style="font-weight: normal">Kinematic
+model of robot KR210 is presented in the picture above. Following
+sketch with </span></span></font><font face="KaTeX Math"><span style="letter-spacing: normal"><span style="font-weight: normal">kr210.urdf.xacro</span></span></font><span style="letter-spacing: normal">
+</span><font face="KaTeX Math"><span style="letter-spacing: normal"><span style="font-weight: normal">file
+in the project allowed to define the DH parameters.</span></span></font></span></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<table width="504" cellpadding="4" cellspacing="0">
+	<col width="87">
+	<col width="112">
+	<col width="100">
+	<col width="82">
+	<col width="81">
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">i</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#0066cc" style="background: #0066cc" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">alpha(i-1)</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#0066cc" style="background: #0066cc" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">a(i-1)</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#0066cc" style="background: #0066cc" style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0.04in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">d(i)</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#0066cc" style="background: #0066cc" style="border: 1px solid #000000; padding: 0.04in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">q(i)</font></font></font></p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">1</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0.75</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">2</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">-pi/2</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0.35</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">q2-pi/2
+			</font></font></font>
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">3</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">1.25</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">4</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">-pi/2</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">-0.054</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">1.5</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">5</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">pi/2</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">6</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">-pi/2</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><br/>
+
+			</p>
+		</td>
+	</tr>
+	<tr valign="top">
+		<td width="87" height="2" bgcolor="#0066cc" style="background: #0066cc" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">7</font></font></font></p>
+		</td>
+		<td width="112" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="100" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+		<td width="82" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: none; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0.303</font></font></font></p>
+		</td>
+		<td width="81" bgcolor="#83caff" style="background: #83caff" style="border-top: none; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000; padding-top: 0in; padding-bottom: 0.04in; padding-left: 0.04in; padding-right: 0.04in">
+			<p style="margin-left: 0.04in"><font color="#ffffff"><font face="Ubuntu"><font size="2" style="font-size: 11pt">0</font></font></font></p>
+		</td>
+	</tr>
+</table>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f">2.
+Transformation Matrices</span></b></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Homogeneous
+transform matrix was applied with the skeleton code:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_41a675f6f1368e9a.png" name="Image2" align="left" width="643" height="139" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">DH
+parameters are applied as following:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_f5ff5fdebeeda2cb.png" name="Image3" align="left" width="585" height="171" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font size="2" style="font-size: 11pt"><font color="#4f4f4f"><font face="Ubuntu"><span style="letter-spacing: normal"><span style="font-weight: normal">Individual
+transform matrices </span></span></font><font face="KaTeX Math"><span style="letter-spacing: normal"><span style="font-weight: normal">about
+each joint(from joint(i-1) to joint(i)) are created as following:</span></span></font></span></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_b3fdf3b0299b5ba1.png" name="Image4" align="left" width="526" height="188" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">*
+End Effector(EE) represents gripper link of the robot.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Generalized
+homogeneous transform between base_link and gripper_link using only
+end-effector pose is generated in T0_EE variable.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f">3.
+Decoupling Inverse Kinematics</span></b></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Inverse
+kinematic for 6 axis robot will be performed by kinematical
+decoupling, where in order to solve the whole problem can be divided
+by decoupling the kinematic into two subtasks:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">1.
+Position of inverse kinematic problem</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">2.
+Orientation of inverse kinematic problem</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f">1.
+Position of inverse kinematic problem</span></b></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Kinematic
+Analysis shows that:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_c3563042f7534eb3.png" name="Image5" align="left" width="546" height="379" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">-
+Joint 5 intersects axes Z4, Z5, and Z6, and the movement of axis
+4,5,6 does not affect on the position of joint5. Therefore, the
+position of joint 5 can be used for calculating theta 1,2 and 3
+without the effect from next joints.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">To
+get wrist center with given end-effector position with the code:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<img src="p2_report_html_a223537c6d96cbc8.png" name="Image8" align="left" width="643" height="186" border="0"/>
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Position
+and orientation are provided for compensating discrepancy between DH
+parameters and Gazebo.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_4cf58bc47a68f48a.png" name="Image9" align="left" width="643" height="407" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font size="2" style="font-size: 11pt"><font color="#4f4f4f"><font face="Ubuntu"><span style="letter-spacing: normal"><span style="font-weight: normal">To
+</span></span></font><font face="KaTeX Math"><span style="letter-spacing: normal"><span style="font-weight: normal">Solve</span></span></font><span style="letter-spacing: normal">
+</span><font face="KaTeX Math"><span style="letter-spacing: normal"><span style="font-weight: normal">Position
+for theta1, theta2, theta3:</span></span></font></span></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_575796c1c7752b75.png" name="Image6" align="left" width="619" height="348" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Angle
+and side of the triangle which is formed with joints are calculated
+with cos I, II.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">The
+theta angles are implemented in code:</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_318e0c97d08bef63.png" name="Image7" align="left" width="643" height="175" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f"><font face="Ubuntu"><span style="letter-spacing: normal">2</span></font><font face="KaTeX Math"><span style="letter-spacing: normal">.
+Orientation</span></font><span style="letter-spacing: normal"> </span><font face="KaTeX Math"><span style="letter-spacing: normal">of
+inverse kinematic problem</span></font></span></b></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; font-weight: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><font color="#4f4f4f">Orientation
+of wrist center can simply be derived from rotation matrix from the
+wrist center to end effector.</span></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_d93f0d4a487d5075.png" name="Image10" align="left" width="643" height="131" border="0"/>
+<br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; font-variant: normal; letter-spacing: normal; font-style: normal; line-height: 100%">
+<span style="display: inline-block; border: none; padding: 0in"><font face="Ubuntu"><font size="2" style="font-size: 11pt"><b><font color="#4f4f4f">Project
+Implementation</span></b></font></font></font></p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><img src="p2_report_html_e273a3ff6e38626c.png" name="Image11" align="left" width="643" height="356" border="0"/>
+The
+robot showed move with high accuracy of putting can to trash bin in
+8/10 times. DH parameters could be adjusted more precisely from the
+error displayed in IK_debug.py file.</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+<p style="margin-bottom: 0in; line-height: 100%"><br/>
+
+</p>
+</body>
+</html>
